@@ -2,7 +2,7 @@ pipeline {
   //agent {
     //label 'docker' 
  // }
- agent any {
+ agent any 
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
@@ -16,7 +16,7 @@ pipeline {
     }
   }
 }
-}
+
 
 
 
