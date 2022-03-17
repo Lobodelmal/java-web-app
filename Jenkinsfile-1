@@ -1,15 +1,20 @@
 pipeline {
-  agent { label 'master' }
-  options {
-    buildDiscarder(logRotator(numToKeepStr: '5'))
-  }
-  stages {
-    stage('Scan') {
-      steps {
-        withSonarQubeEnv(installationName: 'sq1') { 
-          sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+    agent { label 'master' }
+    stages {
+        stage('Stage1') {
+            steps {
+                script {
+                    env.node_name = "my_node_label"
+                }
+                echo "node_name: ${env.node_name}"
+            }
         }
-      }
+
+        stage('Stage2') {
+            agent { label "${env.node_name}" }
+            steps {
+                echo "node_name: ${env.node_name}"
+            }
+        }
     }
-  }
 }
